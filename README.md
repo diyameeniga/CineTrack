@@ -1,3 +1,5 @@
+Deployment URL: https://cinetrack-z538.onrender.com 
+
 ## AI Usage
 
 I used Microsoft Copilot as a development assistant for:
