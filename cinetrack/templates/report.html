@@ -1,0 +1,112 @@
+{% load static %}
+{% load stars %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>CineTrack Report</title>
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+
+<header class="main-header">
+  <h1>CINETRACK REPORT</h1>
+  <a href="{% url 'title_list' %}" class="btn back-btn">
+    ← Back to Collection
+  </a>
+</header>
+
+<section class="card">
+    <h2>FILTER REPORT</h2>
+  
+    <form method="GET" class="filter-form">
+  
+        <select name="type">
+
+            <option value="all"
+              {% if not type_query or type_query == "all" %}
+                selected
+              {% endif %}
+            >
+              All Types
+            </option>
+          
+            {% for value, label in type_choices %}
+              <option value="{{ value }}"
+                {% if type_query == value %}
+                  selected
+                {% endif %}
+              >
+                {{ label }}
+              </option>
+            {% endfor %}
+          
+        </select>
+  
+      <input type="text" name="title" placeholder="Title contains..." value="{{ request.GET.title|default:'' }}">
+  
+      <input type="number" name="year" placeholder="Year" value="{{ request.GET.year|default:'' }}">
+  
+      <input type="number" name="min_rating" placeholder="Min Rating" min="1" max="10" value="{{ request.GET.min_rating|default:'' }}">
+  
+      <button type="submit" class="primary-btn">
+          Generate Report
+      </button>
+  
+    </form>
+</section>
+
+<section class="card">
+    <h2>REPORT RESULTS</h2>
+  
+    {% if titles %}
+      <div class="table-wrapper">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Year</th>
+              <th>Type</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for title in titles %}
+              <tr>
+                <td>{{ title.name }}</td>
+                <td>{{ title.release_year }}</td>
+                <td>{{ title.get_type_display }}</td>
+                <td>{{ title.rating }}/10</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No results found.</p>
+    {% endif %}
+</section>
+
+<section class="card">
+    <h2>REPORT STATISTICS</h2>
+  
+    <div class="report-stats">
+  
+      <p><strong>Total Titles:</strong> {{ stats.total_titles|default:0 }}</p>
+  
+      {% if not type_query or type_query == "all" %}
+        <p><strong>Total Movies:</strong> {{ total_movies }}</p>
+        <p><strong>Total Shows:</strong> {{ total_shows }}</p>
+      {% endif %}
+  
+      <p><strong>Average Rating:</strong> {{ stats.average_rating|floatformat:1 }}</p>
+      <p><strong>Oldest Release:</strong> {{ stats.oldest_release }}</p>
+      <p><strong>Newest Release:</strong> {{ stats.newest_release }}</p>
+  
+    </div>
+  </section>
+
+</body>
+</html>

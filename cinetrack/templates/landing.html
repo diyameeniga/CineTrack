@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cinetrack</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+
+<div class="landing-container">
+
+    <div class="landing-content">
+        <h1 class="landing-title">CINETRACK</h1>
+
+        <p class="landing-sub">
+            Rating Count: {{ rating_count }}
+        </p>
+
+        <a href="{% url 'title_list' %}" class="btn primary-btn landing-btn">
+            Let's Watch
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
