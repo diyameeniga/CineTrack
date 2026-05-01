@@ -4,8 +4,12 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'dummy-secret-key'
-DEBUG = True
-ALLOWED_HOSTS = ['*']  #[] changing from this to allow for production host
+# DEBUG = True
+# ALLOWED_HOSTS = ['*']  #[] changing from this to allow for production host
+
+#for deployment
+DEBUG = False
+ALLOWED_HOSTS = ['.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
